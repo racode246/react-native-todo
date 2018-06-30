@@ -1,5 +1,11 @@
 import React from 'react';
-import { ScrollView, Text, View, StyleSheet } from 'react-native';
+import { 
+	ScrollView, 
+	Text,
+	View,
+	StyleSheet,
+	TouchableOpacity
+} from 'react-native';
 
 export default (props) => (
 	<ScrollView style={styles.scrollView}>
@@ -7,6 +13,9 @@ export default (props) => (
 			props.todos.map((todo, index) => (
 				<View key={todo + index} style={styles.todoContainer}>
 					<Text>{todo}</Text>
+					<TouchableOpacity onPress={() => props.onPressDelete(index)}>
+						<Text>DELETE</Text>
+					</TouchableOpacity>
 				</View>
 			))
 		}
@@ -19,6 +28,8 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   todoContainer: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
     backgroundColor: '#ffffff',
     padding: 10,
   },
