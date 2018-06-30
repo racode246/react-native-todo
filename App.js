@@ -12,7 +12,10 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
+
+import TodoList from './components/TodoList';
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -49,6 +52,7 @@ export default class App extends Component<Props> {
         >
           <Text style={styles.addButtonText}>ADD</Text>
         </TouchableOpacity>
+        <TodoList todos={this.state.todos} />
       </View>
     );
   }
@@ -66,12 +70,12 @@ const styles = StyleSheet.create({
   addButton: {
     backgroundColor: '#333333',
     padding: 14,
-    borderRadius: 4,
     marginTop: 10,
+    borderRadius: 4,
   },
   addButtonText: {
     color: '#ffffff',
     textAlign: 'center',
     fontWeight: 'bold'
-  }
+  },
 });
