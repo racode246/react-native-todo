@@ -24,7 +24,7 @@ export default (props) => (
 
 const styles = StyleSheet.create({
 	scrollView: {
-    backgroundColor: '#dddddd',
+    // backgroundColor: '#dddddd',
     marginTop: 15,
   },
   todoContainer: {

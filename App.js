@@ -6,19 +6,24 @@
 
 import React, { Component } from 'react';
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableOpacity,
-  ScrollView,
+  AsyncStorage,
 } from 'react-native';
 
 import TodoList from './components/TodoList';
 
 type Props = {};
 export default class App extends Component<Props> {
+
+  constructor(props) {
+    super(props);
+    
+    this.loadTodos();
+  }
 
   state = {
     newTodo: '',
@@ -34,12 +39,25 @@ export default class App extends Component<Props> {
     this.setState({
       newTodo: '',
       todos: [newTodo, ...this.state.todos],
-    })
+    }, () => this.storeTodos()); // 第二引数に渡すことでsetStateの変更が完了したあとに呼ぶことができる
   }
 
   onPressDelete(index) {
     this.setState({
       todos: this.state.todos.filter((val, idx) => idx !== index),
+    }, () => this.storeTodos());
+  }
+
+  storeTodos() {
+    // AsyncStorageは保存時に文字列に変換する必要がある
+    const str = JSON.stringify(this.state.todos);
+    AsyncStorage.setItem('todos', str);
+  }
+
+  loadTodos() {
+    AsyncStorage.getItem('todos').then(str => {
+      const todos = str ? JSON.parse(str) : [];
+      this.setState({ todos });
     });
   }
 
