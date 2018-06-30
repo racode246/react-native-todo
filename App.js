@@ -10,7 +10,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput
+  TextInput,
+  TouchableOpacity,
 } from 'react-native';
 
 type Props = {};
@@ -18,10 +19,19 @@ export default class App extends Component<Props> {
 
   state = {
     newTodo: '',
+    todos: [],
   }
 
   onChangeText(newTodo) {
     this.setState({ newTodo });
+  }
+
+  onPressAdd() {
+    const { newTodo } = this.state;
+    this.setState({
+      newTodo: '',
+      todos: [newTodo, ...this.state.todos],
+    })
   }
 
   render() {
@@ -29,9 +39,16 @@ export default class App extends Component<Props> {
     return (
       <View style={styles.container}>
         <TextInput 
+          value={this.state.newTodo}
           style={styles.form}
           onChangeText={text => this.onChangeText(text)}
         />
+        <TouchableOpacity 
+          style={styles.addButton}
+          onPress={() => this.onPressAdd()}
+        >
+          <Text style={styles.addButtonText}>ADD</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -46,4 +63,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#eeeeee',
     padding: 10,
   },
+  addButton: {
+    backgroundColor: '#333333',
+    padding: 14,
+    borderRadius: 4,
+    marginTop: 10,
+  },
+  addButtonText: {
+    color: '#ffffff',
+    textAlign: 'center',
+    fontWeight: 'bold'
+  }
 });
